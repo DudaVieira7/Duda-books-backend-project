@@ -1,34 +1,19 @@
 const { Router} = require('express');
 const { getLivros} = require('../controladores/livro')
+const { postLivros} = require('../controladores/livro')
+const { patchLivros} = require('../controladores/livro')
+const { deleteLivros} = require('../controladores/livro')
+const { getLivro} = require('../controladores/livro')
 const router = Router();
 
 router.get('/', getLivros)
+router.get('/:id', getLivro)
 
 
-router.post('/',(req, res) =>{
-   try {
-     res.send('Você fez uma requisição do tipo post')
-   } catch (error) {
-        res.status(500)
-        res.send(error.message)
-   }
-})
+router.post('/',postLivros)
 
-router.patch('/',(req, res)=>{
-   try {
-     res.send('Você fez uma requisição do tipo patch')
-   } catch (error) {
-        res.status(500)
-        res.send(error.message)
-   }
-})
+router.patch('/:id',patchLivros)
 
-router.delete('/',(req, res)=>{
-    try {
-        res.send('Você fez uma requisição do tipo delete')
-    } catch (error) {
-       res.send(error.message) 
-    }
-})
+router.delete('/:id',deleteLivros)
 
 module.exports = router
