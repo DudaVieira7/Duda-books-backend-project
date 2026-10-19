@@ -1,5 +1,7 @@
 const fs = require('fs')
 
+
+
 function getTodosLivros(){
     const dados = fs.readFileSync('livros.json', 'utf-8')
     console.log("Dados lidos do JSON bruto:", dados) // <--- Vai mostrar no terminal o conteúdo do arquivo
@@ -16,7 +18,17 @@ function getLivroPorId(id){
     return livroFiltrado
 }
 
+
+function insereLivro(livroNovo){
+    const livros = JSON.parse(fs.readFileSync('livros.json'))
+    const novaListaLivros = [...livros, livroNovo]
+
+    fs.writeFileSync('livros.json', JSON.stringify(novaListaLivros))
+}
+
+
 module.exports = {
     getTodosLivros,
     getLivroPorId,
+    insereLivro,
 }
