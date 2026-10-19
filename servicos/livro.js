@@ -27,8 +27,22 @@ function insereLivro(livroNovo){
 }
 
 
+
+function editaLivro(modificacoes, id){
+    let livros = JSON.parse(fs.readFileSync('livros.json')) // sempre tem que usar a lista completa como base inicial para as ações
+   const indiceModificado = livros.findIndex(livro => livro.id == id)//Procura dentro da lista qual é a posição (o índice) do livro que tem o id igual ao que você passou.
+
+    const novoConteudo = {...livros[indiceModificado], ...modificacoes} //Pega o livro antigo que estava nessa posição e mistura (...) com as novas modificações que você enviou. Tudo o que você mandou atualizar substitui o valor antigo, e o restante continua igual.
+
+    livros[indiceModificado] = novoConteudo
+
+    fs.writeFileSync('livros.json', JSON.stringify(livros))
+   
+}
+
 module.exports = {
     getTodosLivros,
     getLivroPorId,
     insereLivro,
+    editaLivro,
 }
