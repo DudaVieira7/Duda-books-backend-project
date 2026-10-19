@@ -1,4 +1,4 @@
-const { getTodosLivros, getLivroPorId, insereLivro, editaLivro } = require('../servicos/livro');
+const { getTodosLivros, getLivroPorId, insereLivro, editaLivro, apagarLivro } = require('../servicos/livro');
 
 
 function getLivros(req, res){
@@ -59,7 +59,9 @@ try {
 
 function deleteLivro(req, res){
    try {
-     res.send('Você fez uma requisição do tipo patch')
+     const id = req.params.id
+     apagarLivro(id)
+     res.send('livro deletado com sucesso!')
    } catch (error) {
         res.status(500)
         res.send(error.message)
