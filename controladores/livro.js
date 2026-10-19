@@ -34,8 +34,13 @@ function postLivro(req, res){
     try {
 
         const novoLivro = req.body
-        insereLivro(novoLivro)
-        res.status(201).send('Livro inserido com sucesso!');
+        if(req.body.nome){
+            insereLivro(novoLivro)
+            res.status(201).send('Livro inserido com sucesso!');
+        }else{
+            res.status(422).send('CAMPO NOME É OBRIGATÓRIO')
+        }
+
      
    } catch (error) {
         res.status(500)
