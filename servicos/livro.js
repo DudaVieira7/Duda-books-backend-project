@@ -42,9 +42,9 @@ function editaLivro(modificacoes, id){
 
 
 function apagarLivro(id){
-    
+
     let livros = JSON.parse(fs.readFileSync('livros.json'))
-    const livrosFiltrados = livros.filter(livro => livro.id != id)
+    const livrosFiltrados = livros.filter(livro => livro.id != id) // cria nova lista com os livros que não serão apagados
      
     fs.writeFileSync('livros.json', JSON.stringify(livrosFiltrados))
 

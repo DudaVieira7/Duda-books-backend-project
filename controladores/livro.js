@@ -16,9 +16,14 @@ function getLivros(req, res){
 function getLivro(req, res){
     try {
         const id = req.params.id
-        const livro = getLivroPorId(id) 
 
-        res.send(livro) 
+        if(id && Number(id)){
+            const livro = getLivroPorId(id) 
+            res.send(livro)  
+        }else{
+            res.status(422).send('ID inválido!')
+        }
+
     } catch (error) {
         res.status(500)
         res.send(error.message)
@@ -44,11 +49,14 @@ try {
     const id = req.params.id
     const modificar = req.body
 
-    console.log("ID recebido na URL:", id)
-    console.log("O que veio no corpo (req.body):", modificar)
 
-    editaLivro(modificar, id)
-    res.send('item modificado com sucesso!')
+    if(id && Number(id)){
+        editaLivro(modificar, id)
+        res.send('item modificado com sucesso!')
+
+    }else{
+        res.status(422).send('ID inválido!')
+    }
 
    } catch (error) {
         res.status(500)
@@ -59,9 +67,16 @@ try {
 
 function deleteLivro(req, res){
    try {
+    
      const id = req.params.id
-     apagarLivro(id)
-     res.send('livro deletado com sucesso!')
+
+     if(id && Number(id)){
+        apagarLivro(id)
+        res.send('livro deletado com sucesso!')
+     }else{
+        res.status(422).send('ID inválido!')
+     }
+
    } catch (error) {
         res.status(500)
         res.send(error.message)
