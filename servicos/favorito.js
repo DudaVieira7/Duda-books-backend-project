@@ -1,31 +1,32 @@
 const fs = require('fs')
 
-function getTodosFavoritos(){
-    const dados = fs.readFileSync('favoritos.json')
+console.log('SERVICO NOVO CARREGADO')
+
+function getTodosFavoritos() {
+    return JSON.parse(fs.readFileSync('favoritos.json'))
 }
 
-
-function deletaFavoritoPorId(id){
-    const livrosFavoritos = fs.readFileSync('favoritos.json')
-    const livrosFavoritosFiltrados = livrosFavoritos.filter(livro => livro.id != id )
-    fs.writeFileSync('favoritos.json', JSON.stringify(livrosFavoritosFiltrados))
-
+function deletaFavoritoPorId(id) {
+    const favoritos = JSON.parse(fs.readFileSync('favoritos.json'))
+    const filtrados = favoritos.filter(livro => livro.id !== id)
+    fs.writeFileSync('favoritos.json', JSON.stringify(filtrados))
+    return filtrados
 }
 
+function novoLivroFavorito(id) {
+    const livros = JSON.parse(fs.readFileSync('livros.json'))
+    const favoritos = JSON.parse(fs.readFileSync('favoritos.json'))
+    const livroInserido = livros.find(livro => livro.id === id)
 
-function novoLivroFavorito(id){
-    const livros = fs.readFileSync('livros.json')
-    const favoritos = fs.readFileSync('favoritos.json')
-    const livroInseridos = livros.find(livro => livro.id === id)
-    const novaListaFavoritos = [...favoritos, livroInseridos]  // faz uma cópia de livros favoritoes e adiciona um novo elemento
-    fs.writeFileSync('favoritos.json', JSON.stringify(novaListaFavoritos))
+    if (!livroInserido) {
+        throw new Error('Livro não encontrado!')
+    }
+
+    fs.writeFileSync('favoritos.json', JSON.stringify([...favoritos, livroInserido]))
 }
 
 module.exports = {
     getTodosFavoritos,
     deletaFavoritoPorId,
     novoLivroFavorito,
-
 }
-
-

@@ -1,11 +1,10 @@
-const { Router} = require('express');
-const { getFavoritos} = require('../controladores/favorito')
-const { adicionarNovoFavorito} = require('../controladores/favorito')
-const { deleteLivroFavorito} = require('../controladores/favorito')
-const router = Router();
+const { Router } = require('express')
+const { getFavoritos, postFavorito, deleteLivroFavorito } = require('../controladores/favorito')
 
-router.get('/favoritos', getFavoritos)
+const router = Router()
+
+router.get('/', getFavoritos)
+router.post('/:id', postFavorito)
 router.delete('/:id', deleteLivroFavorito)
-router.post('/:id', adicionarNovoFavorito)
 
 module.exports = router
